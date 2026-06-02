@@ -1,0 +1,47 @@
+<?php
+
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class UpdateContactRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     */
+    public function rules(): array
+    {
+        return [
+            'name'    => 'required|string|max:255',
+            'email'   => 'required|email|max:255',
+            'phone'   => 'required|string|max:20',
+            'title'   => 'required|string|max:255',
+            'content' => 'required|string',
+            'status'  => 'required|in:0,1', // Nếu có trường trạng thái
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'name.required'    => 'Vui lòng nhập họ tên.',
+            'email.required'   => 'Vui lòng nhập email.',
+            'email.email'      => 'Email không đúng định dạng.',
+            'phone.required'   => 'Vui lòng nhập số điện thoại.',
+            'title.required'   => 'Vui lòng nhập tiêu đề.',
+            'content.required' => 'Vui lòng nhập nội dung liên hệ.',
+            'status.required'  => 'Vui lòng chọn trạng thái.',
+            'status.in'        => 'Trạng thái không hợp lệ (chỉ chấp nhận 0 hoặc 1).',
+        ];
+    }
+}
